@@ -1,6 +1,6 @@
 const express = require("express");
 const { z } = require("zod");
-const User = require("../database");
+const User = require("../database/user.model");
 const { hashPassword, verifyPassword, generateJWT, verifyJWT } = require("../utils");
 const { authMiddleware } = require("../middleware/auth");
 
