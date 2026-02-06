@@ -14,14 +14,23 @@ async function verifyPassword(password, existingPass) {
     return true;
 }
 
-async function generateJWT(payload){
-    const token = await jwt.sign(payload, JWT_SECRET)
-    console.log(token)
+function generateJWT(payload){
+    const token = jwt.sign(payload, JWT_SECRET)
     return token;
+}
+
+function verifyJWT(token) {
+    try{
+        const decoded = jwt.verify(token, JWT_SECRET)
+        return decoded
+    } catch (err){
+        return false
+    }
 }
 
 module.exports = {
     hashPassword,
     verifyPassword,
-    generateJWT
+    generateJWT,
+    verifyJWT
 }

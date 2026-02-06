@@ -1,7 +1,7 @@
 const express = require("express");
 const { z } = require("zod");
 const User = require("../database");
-const { hashPassword, verifyPassword, generateJWT } = require("../utils");
+const { hashPassword, verifyPassword, generateJWT, verifyJWT } = require("../utils");
 
 const userRouter = express.Router()
 
@@ -75,14 +75,54 @@ userRouter.post('/signin', async (req, res) => {
     }
 
     // generate JWT
-    const token = await generateJWT({
+    const token = generateJWT({
         userEmail : requestedUser.userEmail,
         firstname : requestedUser.firstName
     })
-    console.log(token)
 
     // Respond
     res.status(200).json({token:token})
+})
+
+const userUpdateSchema = z.object({
+    firstName : z.string().min(2).max(20).optional(),
+    lastName : z.string().min(2).max(20).optional(),
+    password : z.string().min(6).optional()
+})
+userRouter.put('/update', async (req, res) => {
+    // validate Auth headers
+    const authHeader = req.header('Authorization')
+    const token = authHeader.split(' ')[1]
+    const decoded = verifyJWT(token)
+    if(!decoded){
+        res.status(400).json({msg : 'Invalid Token'})
+        return;
+    }
+    
+    // update data
+    const updateData = req.body
+    
+    // input validation
+    const valid = userUpdateSchema.safeParse(updateData)
+    if(!valid){
+        res.status(411).json({msg : 'Invalid Inputs'})
+        return;
+    }
+
+    // find and update the user
+    const requestedUser = await User.findOneAndUpdate(
+        {userEmail : decoded.userEmail},
+        updateData
+    )
+
+    // 404 if user not found
+    if (!requestedUser){
+        res.status(404).json({msg : 'User Not Found'})
+        return;
+    }
+
+    // response
+    res.status(200).json({msg : 'User Updated Succesfully'})
 })
 
 module.exports = {userRouter}
