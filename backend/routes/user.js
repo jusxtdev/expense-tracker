@@ -89,7 +89,7 @@ const userUpdateSchema = z.object({
     lastName : z.string().min(2).max(20).optional(),
     password : z.string().min(6).optional()
 })
-userRouter.put('/update', async (req, res) => {
+userRouter.put('/', async (req, res) => {
     // validate Auth headers
     const authHeader = req.header('Authorization')
     const token = authHeader.split(' ')[1]
