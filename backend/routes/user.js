@@ -2,6 +2,7 @@ const express = require("express");
 const { z } = require("zod");
 const User = require("../database");
 const { hashPassword, verifyPassword, generateJWT, verifyJWT } = require("../utils");
+const { authMiddleware } = require("../middleware/auth");
 
 const userRouter = express.Router()
 
@@ -89,15 +90,8 @@ const userUpdateSchema = z.object({
     lastName : z.string().min(2).max(20).optional(),
     password : z.string().min(6).optional()
 })
-userRouter.put('/', async (req, res) => {
-    // validate Auth headers
-    const authHeader = req.header('Authorization')
-    const token = authHeader.split(' ')[1]
-    const decoded = verifyJWT(token)
-    if(!decoded){
-        res.status(400).json({msg : 'Invalid Token'})
-        return;
-    }
+userRouter.put('/',authMiddleware, async (req, res) => {
+    const decoded = req.user
     
     // update data
     const updateData = req.body
