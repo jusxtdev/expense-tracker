@@ -1,9 +1,9 @@
 const express = require('express')
 const cors = require('cors')
-const {rootRouter} = require('./routes/root')
+const { rootRouter } = require('./routes/root')
 const { connectDB } = require('./database')
-require('dotenv').config()
 
+const config = require('./config')
 
 const app = express()
 
@@ -23,3 +23,5 @@ app.use('/api/v1', rootRouter)
 
 
 app.listen(3000, () => console.log('Backend server running on port 3000'))
+
+module.exports = { config }

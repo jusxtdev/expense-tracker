@@ -130,7 +130,6 @@ Request Body
 
 #### GET
 1. Auth validation
-2. input validation
 3. query all expense
 4. respond
 

@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
-const JWT_SECRET = process.env.JWT_SECRET
+const jwt = require('jsonwebtoken');
+const config = require('./config');
+
+const JWT_SECRET = config.JWT_SECRET
 const SALT_ROUNDS = 10;
 
 async function hashPassword(password){
