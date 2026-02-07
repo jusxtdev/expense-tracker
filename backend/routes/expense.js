@@ -1,19 +1,14 @@
 const express = require('express');
 const { authMiddleware } = require('../middleware/auth');
-const { z } = require('zod');
+const { createExpenseSchema, deleteExpenseSchema } = require('../schemas/expense.schema')
+
 const {Expense} = require('../database/expense.model');
 const { Category } = require('../database/category.model');
 
 const expenseRouter = express.Router()
 
 
-const createExpenseSchema = z.object({
-    title : z.string().min(2).max(20),
-    amount : z.number(),
-    description : z.string().min(2).max(45).optional(),
-    date : z.coerce.date().optional(),
-    categories : z.array(z.string())  // Array of category titles
-})
+
 expenseRouter.post('/', authMiddleware, async (req, res) => {
     const expenseData = req.body
     
@@ -70,9 +65,7 @@ expenseRouter.get('/', authMiddleware, async (req, res) => {
     }
 })
 
-const deleteExpenseSchema = z.object({
-    expenseId : z.number()
-})
+
 expenseRouter.delete('/', authMiddleware, async (req, res) => {
     const body = req.body
     const valid = deleteExpenseSchema.safeParse(body)

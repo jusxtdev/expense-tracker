@@ -5,10 +5,9 @@ const { Category } = require('../database/category.model');
 
 const categoryRouter = express.Router()
 
+const { createCategorySchema, deleteCategorySchema } = require('../schemas/category.schema')
 
-const createCategorySchema = z.object({
-    title : z.string()
-}) 
+ 
 categoryRouter.post('/', authMiddleware, async (req, res) =>{
     const categoryData = req.body
 
@@ -39,9 +38,7 @@ categoryRouter.get('/', authMiddleware, async(req, res) => {
     }
 })
 
-const deleteCategorySchema = z.object({
-    categoryId : z.string()
-})
+
 
 // TODO - Does not raise an error on wrong id
 categoryRouter.delete('/', authMiddleware, async (req, res) => {

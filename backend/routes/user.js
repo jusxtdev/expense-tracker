@@ -1,17 +1,14 @@
 const express = require("express");
-const { z } = require("zod");
 const User = require("../database/user.model");
-const { hashPassword, verifyPassword, generateJWT, verifyJWT } = require("../utils");
+const { hashPassword, verifyPassword, generateJWT } = require("../utils");
 const { authMiddleware } = require("../middleware/auth");
+
+const { userSignupSchema, userSigninSchema, userUpdateSchema } = require('../schemas/user.schema')
+
 
 const userRouter = express.Router()
 
-const userSignupSchema = z.object({
-    userEmail : z.string().email(),
-    firstName : z.string().min(2).max(20),
-    lastName : z.string().min(2).max(20).optional(),
-    password : z.string().min(6)
-})  
+
 userRouter.post('/signup', async (req, res) => {
     const userData = req.body
 
@@ -49,10 +46,7 @@ userRouter.post('/signup', async (req, res) => {
 
 
 
-const userSigninSchema = z.object({
-    userEmail : z.string().email(),
-    password : z.string().min(6)
-})
+
 userRouter.post('/signin', async (req, res) => {
     const userData = req.body
 
@@ -86,11 +80,7 @@ userRouter.post('/signin', async (req, res) => {
     res.status(200).json({token:token})
 })
 
-const userUpdateSchema = z.object({
-    firstName : z.string().min(2).max(20).optional(),
-    lastName : z.string().min(2).max(20).optional(),
-    password : z.string().min(6).optional()
-})
+
 userRouter.put('/',authMiddleware, async (req, res) => {
     const decoded = req.user
     
