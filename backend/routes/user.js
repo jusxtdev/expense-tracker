@@ -16,13 +16,14 @@ userRouter.post('/signup', async (req, res) => {
     const userData = req.body
 
     // input validation
-    const valid = userSchema.safeParse(userData)
+    const valid = userSignupSchema.safeParse(userData)
     if (!valid.success){
         res.status(411).json({msg : 'Invalid Inputs'})
         return;
     }
 
     // check if user already exists
+    console.log(userData)
     const exists = await User.findOne({userEmail : userData.userEmail})
     if (exists){
         res.status(411).json({msg : 'User Already Exists'})
@@ -108,12 +109,6 @@ userRouter.put('/',authMiddleware, async (req, res) => {
         {userEmail : decoded.userEmail},
         updateData
     )
-
-    // 404 if user not found
-    if (!requestedUser){
-        res.status(404).json({msg : 'User Not Found'})
-        return;
-    }
 
     // response
     res.status(200).json({msg : 'User Updated Succesfully'})
