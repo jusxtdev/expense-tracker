@@ -70,4 +70,20 @@ expenseRouter.get('/', authMiddleware, async (req, res) => {
     }
 })
 
+const deleteExpenseSchema = z.object({
+    expenseId : z.number()
+})
+expenseRouter.delete('/', authMiddleware, async (req, res) => {
+    const body = req.body
+    const valid = deleteExpenseSchema.safeParse(body)
+
+    try{
+        await Expense.findByIdAndDelete(body.expenseId)
+        res.status(202).json({msg : 'Deleted Expense Succesfully'})
+    } catch (err){
+        console.log(err)
+        res.status(500).json({msg : 'Some Error occurred'})
+    }
+})
+
 module.exports = {expenseRouter}

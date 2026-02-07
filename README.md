@@ -159,7 +159,4 @@ Request Body
 ```
 1. Auth validation
 2. input validation
-3. schema.pre('delete')
-    - find all categories which have expense
-    - remove the expenseId from the category document
 4. delete expense
