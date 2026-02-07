@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
         type : String,
         required : true,
         minLength : 6,
-    }
+    },
 })
 
 const User = mongoose.model('User', UserSchema);
