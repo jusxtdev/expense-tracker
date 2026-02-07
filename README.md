@@ -117,9 +117,6 @@ Request Body
 ```
 1. auth validation
 2. input validation
-3. Schema.pre('save')
-    - In all expense where categories has categoryId
-    - remove that id from there
 4. delete category document 
 
 
