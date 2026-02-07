@@ -1,9 +1,12 @@
 const { default: mongoose, mongo } = require("mongoose");
+const { Category } = require("./category.model");
 
 const expenseSchema = new mongoose.Schema({
     title : {
         type : String,
         required : true,
+        minLength : 2,
+        maxLength : 20
     },
     amount : {
         type : Number,
@@ -11,7 +14,9 @@ const expenseSchema = new mongoose.Schema({
     },
     description : {
         type : String,
-        required : false
+        required : false,
+        minLength : 2,
+        maxLength : 45
     },
     date : {
         type : Date,
@@ -27,6 +32,7 @@ const expenseSchema = new mongoose.Schema({
     ]
 })
 
+
 const Expense = mongoose.model('Expense', expenseSchema)
 
-module.exports = Expense
+module.exports = {Expense}

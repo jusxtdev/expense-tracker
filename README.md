@@ -91,9 +91,76 @@ Request Body
 }
 ``` 
 
-### Expense Routes `/expense`
-- All routes protected 
-
 
 ### Category Routes `/category`
-- 
+
+#### GET 
+1. auth validation
+2. query all categories
+3. response
+
+#### POST /category
+```js
+{
+    title : str
+}
+```
+1. Auth validation
+2. input validation
+3. create new category document
+
+#### DELETE /category
+```js
+{
+    categoryId : number
+}
+```
+1. auth validation
+2. input validation
+3. Schema.pre('save')
+    - In all expense where categories has categoryId
+    - remove that id from there
+4. delete category document 
+
+
+- Category.Objectid <> Expense.Objectid
+
+### Expense Routes `/expense`
+- All routes protected using authMiddleware
+
+#### GET
+1. Auth validation
+2. input validation
+3. query all expense
+4. respond
+
+#### POST /expense
+```js
+{
+    title : str,
+    amount : number,
+    description : str,
+    date : Date | default=date.now()
+    categories : [catgTitle1, catgTitle2 ...]
+}
+```
+1. Auth validation
+2. input validation
+    - validate date
+3. categories (In schema.pre())
+    1. convert the catgTitle to corresponding id's
+    2. if catg title not found, respond with 404
+4. save the new expense object
+
+#### DELETE 
+```js
+{
+    expenseId : number
+}
+```
+1. Auth validation
+2. input validation
+3. schema.pre('delete')
+    - find all categories which have expense
+    - remove the expenseId from the category document
+4. delete expense

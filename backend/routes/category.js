@@ -1,7 +1,7 @@
 const express = require('express');
 const { authMiddleware } = require('../middleware/auth');
 const { z } = require('zod');
-const Category = require('../database/category.model');
+const { Category } = require('../database/category.model');
 
 const categoryRouter = express.Router()
 
@@ -19,7 +19,7 @@ categoryRouter.post('/', authMiddleware, async (req, res) =>{
     }
 
     const newCategory = new Category(categoryData)
-
+    console.log(newCategory)
     try {
         await newCategory.save()
         res.status(201).json({msg : 'category created Succesfully'})
