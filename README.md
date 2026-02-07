@@ -112,7 +112,7 @@ Request Body
 #### DELETE /category
 ```js
 {
-    categoryId : number
+    categoryId : str
 }
 ```
 1. auth validation

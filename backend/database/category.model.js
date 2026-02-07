@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const { Expense } = require("./expense.model");
 
 const categorySchema = new mongoose.Schema({
     title : {
@@ -15,6 +16,7 @@ const categorySchema = new mongoose.Schema({
         }
     ]
 })
+
 
 const Category = mongoose.model('Category', categorySchema)
 
