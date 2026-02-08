@@ -1,13 +1,10 @@
-const express = require('express');
-const { authMiddleware } = require('../middleware/auth');
-const { createExpenseSchema, deleteExpenseSchema } = require('../schemas/expense.schema')
-
-const {Expense} = require('../database/expense.model');
-const { Category } = require('../database/category.model');
+import express from 'express'
+import { authMiddleware } from '../middleware/auth.js';
+import { createExpenseSchema, deleteExpenseSchema } from '../schemas/expense.schema.js';
+import { Expense } from '../database/expense.model.js';
+import { Category } from '../database/category.model.js';
 
 const expenseRouter = express.Router()
-
-
 
 expenseRouter.post('/', authMiddleware, async (req, res) => {
     const expenseData = req.body
@@ -79,4 +76,4 @@ expenseRouter.delete('/', authMiddleware, async (req, res) => {
     }
 })
 
-module.exports = {expenseRouter}
+export { expenseRouter }

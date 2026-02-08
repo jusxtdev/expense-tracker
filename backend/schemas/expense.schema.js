@@ -1,4 +1,4 @@
-const { z } = require('zod');
+import { z } from 'zod'
 
 const createExpenseSchema = z.object({
     title : z.string().min(2).max(20),
@@ -12,7 +12,7 @@ const deleteExpenseSchema = z.object({
     expenseId : z.number()
 })
 
-module.exports = {
+export {
     createExpenseSchema,
     deleteExpenseSchema
 }

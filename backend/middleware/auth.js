@@ -1,5 +1,6 @@
-const User = require("../database/user.model");
-const { verifyJWT } = require("../utils");
+import { User } from "../database/user.model.js";
+import { verifyJWT } from "../utils.js";
+
 
 async function authMiddleware(req, res, next){
     const authHeader = req.header('Authorization')
@@ -24,4 +25,4 @@ async function authMiddleware(req, res, next){
     next()
 }
 
-module.exports = {authMiddleware}
+export { authMiddleware }

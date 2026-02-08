@@ -1,8 +1,7 @@
-const express = require("express");
-const { userRouter } = require("./user");
-const { categoryRouter } = require("./category");
-const { expenseRouter } = require("./expense");
-
+import express from 'express'
+import { userRouter } from './user.js';
+import { categoryRouter } from './category.js';
+import { expenseRouter } from './expense.js';
 
 const rootRouter = express.Router()
 
@@ -13,4 +12,4 @@ rootRouter.use('/expense', expenseRouter)
 
 
 
-module.exports = { rootRouter }
+export { rootRouter }

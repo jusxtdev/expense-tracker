@@ -1,4 +1,4 @@
-const { z } = require('zod')
+import { z } from 'zod'
 
 const createCategorySchema = z.object({
     title : z.string()
@@ -8,7 +8,7 @@ const deleteCategorySchema = z.object({
     categoryId : z.string()
 })
 
-module.exports = {
+export {
     createCategorySchema,
     deleteCategorySchema
 }

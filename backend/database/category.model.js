@@ -1,5 +1,4 @@
-const { default: mongoose } = require("mongoose");
-const { Expense } = require("./expense.model");
+import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
     title : {
@@ -20,4 +19,4 @@ const categorySchema = new mongoose.Schema({
 
 const Category = mongoose.model('Category', categorySchema)
 
-module.exports = {Category}
+export {Category}

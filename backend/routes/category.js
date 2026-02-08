@@ -1,13 +1,12 @@
-const express = require('express');
-const { authMiddleware } = require('../middleware/auth');
-const { z } = require('zod');
-const { Category } = require('../database/category.model');
+import express from 'express'
+
+import { authMiddleware } from '../middleware/auth.js';
+import { Category } from '../database/category.model.js';
+import { createCategorySchema, deleteCategorySchema } from '../schemas/category.schema.js';
+
 
 const categoryRouter = express.Router()
 
-const { createCategorySchema, deleteCategorySchema } = require('../schemas/category.schema')
-
- 
 categoryRouter.post('/', authMiddleware, async (req, res) =>{
     const categoryData = req.body
 
@@ -38,8 +37,6 @@ categoryRouter.get('/', authMiddleware, async(req, res) => {
     }
 })
 
-
-
 // TODO - Does not raise an error on wrong id
 categoryRouter.delete('/', authMiddleware, async (req, res) => {
     const body = req.body
@@ -59,4 +56,4 @@ categoryRouter.delete('/', authMiddleware, async (req, res) => {
     }
 })
 
-module.exports = {categoryRouter}
+export {categoryRouter}

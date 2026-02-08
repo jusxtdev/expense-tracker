@@ -1,9 +1,8 @@
-const express = require('express')
-const cors = require('cors')
-const { rootRouter } = require('./routes/root')
-const { connectDB } = require('./database')
-
-const config = require('./config')
+import express from 'express'
+import cors from 'cors'
+import { rootRouter } from './routes/root.js'
+import { connectDB } from './database/index.js'
+import { DB_URL, JWT_SECRET } from './config.js'
 
 const app = express()
 
@@ -24,4 +23,4 @@ app.use('/api/v1', rootRouter)
 
 app.listen(3000, () => console.log('Backend server running on port 3000'))
 
-module.exports = { config }
+export { DB_URL, JWT_SECRET }

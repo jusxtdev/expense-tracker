@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const config = require('./config');
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { JWT_SECRET } from './config.js';
 
-const JWT_SECRET = config.JWT_SECRET
+
 const SALT_ROUNDS = 10;
 
 async function hashPassword(password){
@@ -30,7 +30,7 @@ function verifyJWT(token) {
     }
 }
 
-module.exports = {
+export {
     hashPassword,
     verifyPassword,
     generateJWT,
