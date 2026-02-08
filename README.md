@@ -24,7 +24,7 @@ Sort by date or amount
 ### Analytics & Summaries
 
 Total spending for a time period
-Breakdown by category (how much spent on Food vs Transport)
+Breakdown by category like how much spent on Food vs Transport
 Monthly comparisons (spending this month vs last month)
 Average daily/weekly spending
 
