@@ -3,57 +3,16 @@ import express from 'express'
 import { authMiddleware } from '../middleware/auth.js';
 import { Category } from '../database/category.model.js';
 import { createCategorySchema, deleteCategorySchema } from '../schemas/category.schema.js';
+import { addCategory, allCategory, deleteCategory } from '../controllers/category.controller.js';
 
 
 const categoryRouter = express.Router()
 
-categoryRouter.post('/', authMiddleware, async (req, res) =>{
-    const categoryData = req.body
+categoryRouter.post('/', authMiddleware, addCategory)
 
-    const valid = createCategorySchema.safeParse(categoryData)
-    if (!valid.success){
-        res.status(411).json({msg : 'Invalid Inputs'})
-        return;
-    }
-
-    const newCategory = new Category(categoryData)
-    console.log(newCategory)
-    try {
-        await newCategory.save()
-        res.status(201).json({msg : 'category created Succesfully'})
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({msg : 'Some Error occurred'})
-    }
-})
-
-categoryRouter.get('/', authMiddleware, async(req, res) => {
-    try {
-        const allCategories = await Category.find()
-        res.status(200).json({allCategories})
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({msg : 'Some Error occurred'})
-    }
-})
+categoryRouter.get('/', authMiddleware, allCategory)
 
 // TODO - Does not raise an error on wrong id
-categoryRouter.delete('/', authMiddleware, async (req, res) => {
-    const body = req.body
-
-    const valid = deleteCategorySchema.safeParse(body)
-    if (!valid.success){
-        res.status(411).json({msg : 'Invalid Inputs'})
-    }
-
-    try {
-        console.log(body.categoryId)
-        await Category.findByIdAndDelete(body.categoryId)
-        res.status(202).json({msg : 'Succesfully Deleted Category'})
-    } catch (err){
-        console.log(err)
-        res.status(500).json({msg : 'Some Error occurred'})
-    }
-})
+categoryRouter.delete('/', authMiddleware, deleteCategory)
 
 export {categoryRouter}

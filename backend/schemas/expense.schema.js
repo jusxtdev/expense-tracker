@@ -9,7 +9,7 @@ const createExpenseSchema = z.object({
 })
 
 const deleteExpenseSchema = z.object({
-    expenseId : z.number()
+    expenseId : z.string()
 })
 
 export {
